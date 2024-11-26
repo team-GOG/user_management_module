@@ -1,4 +1,4 @@
-package main
+package user_management_module
 
 import (
 	"log"
@@ -7,10 +7,11 @@ import (
 )
 
 func main() {
+
 	// Initialize Fiber app
 	app := fiber.New()
 
-  log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":3000"))
 
 }
 
