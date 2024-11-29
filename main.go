@@ -3,6 +3,7 @@ package user_management_module
 import (
 	"log"
 
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,3 +16,6 @@ func main() {
 
 }
 
+func SayHello() {
+    fmt.Println("Hello from mymodule!")
+}
