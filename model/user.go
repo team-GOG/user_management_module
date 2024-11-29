@@ -70,7 +70,7 @@ func UpdateUser(db *gorm.DB, user User) (err error) {
 
 // DeleteUser deletes a user by ID
 func DeleteUser(db *gorm.DB, id int) (err error) {
-  err = db.Delete(&model.User{}, id).Error;
+    err = db.Delete(&model.User{}, id).Error;
 
     return
 }

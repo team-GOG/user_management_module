@@ -1,4 +1,4 @@
-module user_management_module
+module github.com/Web-developing-team/user_management_module
 
 go 1.23.3
 
