@@ -1,5 +1,9 @@
 package user_management_model
 
+import (
+    "gorm.io/gorm"
+)
+
 type Roleable struct {
     ID           uint   `gorm:"primaryKey"`
     RoleID       uint   `gorm:"not null"`

@@ -1,6 +1,12 @@
 package user_management_model 
 
-import "fmt"
+import (
+    "time"
+    "fmt"
+
+    "github.com/bxcodec/faker/v4"
+    "gorm.io/gorm"
+)
 
 // User represents the users table in the database
 type User struct {
@@ -38,6 +44,8 @@ func CreateUser(db *gorm.DB, user User) (err error) {
 // GetAllUsers retrieves all users
 func GetAllUsers(db *gorm.DB) (err error) {
 
+    var users []User;
+
     err = db.Find(&users).Error
 
     return 
@@ -57,7 +65,7 @@ func UpdateUser(db *gorm.DB, user User) (err error) {
     // Update timestamps
     user.UpdatedAt = time.Now().Unix()
 
-    resutl := db.Model(&User{}).Where("id = ?", user.ID).Updates(user)
+    result := db.Model(&User{}).Where("id = ?", user.ID).Updates(user)
 
     err = result.Error
 
@@ -70,7 +78,7 @@ func UpdateUser(db *gorm.DB, user User) (err error) {
 
 // DeleteUser deletes a user by ID
 func DeleteUser(db *gorm.DB, id int) (err error) {
-    err = db.Delete(&model.User{}, id).Error;
+    err = db.Delete(&User{}, id).Error;
 
     return
 }

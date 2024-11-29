@@ -1,11 +1,10 @@
-package user_management_module
+package main
 
 import (
 	"log"
 
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"user_management_module/user_management_model"
 )
 
 func main() {

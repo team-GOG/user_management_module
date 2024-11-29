@@ -1,5 +1,13 @@
 package user_management_model
 
+import (
+    "time"
+    "fmt"
+
+    "github.com/bxcodec/faker/v4"
+    "gorm.io/gorm"
+)
+
 type Role struct {
     ID          uint   `gorm:"primaryKey"`
     Name        string `gorm:"unique;not null"`
@@ -50,7 +58,7 @@ func GetRole(db *gorm.DB, id int) (role Role, err error) {
 
 // UpdateRole updates an existing role by ID
 func UpdateRole(db *gorm.DB, role Role) (err error) {
-    resutl := db.Model(&Role{}).Where("id = ?", role.ID).Updates(role)
+    result := db.Model(&Role{}).Where("id = ?", role.ID).Updates(role)
 
     err = result.Error
 
@@ -63,7 +71,7 @@ func UpdateRole(db *gorm.DB, role Role) (err error) {
 
 // DeleteRole deletes a role by ID
 func DeleteRole(db *gorm.DB, id int) (err error) {
-    err = db.Delete(&model.Role{}, id).Error;
+    err = db.Delete(&Role{}, id).Error;
 
     return
 }
