@@ -28,7 +28,7 @@ func (r Role) GetType() string {
 }
 
 // CreateRole creates a new role
-func CreateRole(db *gorm.DB, role Role) (err error) {
+func CreateRole(db *gorm.DB, role *Role) (err error) {
 
     // Set timestamps
     role.CreatedAt = time.Now().Unix()
@@ -40,7 +40,7 @@ func CreateRole(db *gorm.DB, role Role) (err error) {
 }
 
 // GetAllRoles retrieves all roles
-func GetAllRoles(db *gorm.DB) (roles []Role, err error) {
+func GetAllRoles(db *gorm.DB, roles *[]Role) (err error) {
 
     err = db.Find(&roles).Error
 
@@ -49,7 +49,7 @@ func GetAllRoles(db *gorm.DB) (roles []Role, err error) {
 }
 
 // GetRole retrieves a role by ID
-func GetRole(db *gorm.DB, id int) (role Role, err error) {
+func GetRole(db *gorm.DB, id string) (role Role, err error) {
 
     err = db.First(&role, id).Error
 
@@ -57,7 +57,7 @@ func GetRole(db *gorm.DB, id int) (role Role, err error) {
 }
 
 // UpdateRole updates an existing role by ID
-func UpdateRole(db *gorm.DB, role Role) (err error) {
+func UpdateRole(db *gorm.DB, role *Role) (err error) {
     result := db.Model(&Role{}).Where("id = ?", role.ID).Updates(role)
 
     err = result.Error
@@ -70,7 +70,7 @@ func UpdateRole(db *gorm.DB, role Role) (err error) {
 }
 
 // DeleteRole deletes a role by ID
-func DeleteRole(db *gorm.DB, id int) (err error) {
+func DeleteRole(db *gorm.DB, id string) (err error) {
     err = db.Delete(&Role{}, id).Error;
 
     return

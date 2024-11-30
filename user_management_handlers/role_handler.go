@@ -2,10 +2,9 @@ package user_management_handlers
 
 import (
     "net/http"
-    "time"
 
     "github.com/gofiber/fiber/v2"
-    "user_management_module/user_management_model"
+	  "github.com/Web-developing-team/user_management_module/user_management_model"
 )
 
 // CreateRole creates a new role
@@ -18,7 +17,7 @@ func CreateRole(c *fiber.Ctx) error {
       return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
     }
 
-    err = user_management_model.CreateRole(&role)
+    err := user_management_model.CreateRole(db, &role)
 
     // Insert role into database
     if err != nil {
@@ -33,7 +32,7 @@ func GetAllRoles(c *fiber.Ctx) error {
 
     var roles []user_management_model.Role
 
-    err := user_management_model.GetAllRoles(&roles)
+    err := user_management_model.GetAllRoles(db, &roles)
 
     if err != nil {
       return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to fetch roles"})
@@ -47,9 +46,7 @@ func GetRole(c *fiber.Ctx) error {
 
     id := c.Params("id")
 
-    var role user_management_model.Role
-
-    err := user_management_model.GetRole(id, &role)
+    role, err := user_management_model.GetRole(db, id)
 
     if err != nil {
       return c.Status(http.StatusNotFound).JSON(fiber.Map{"error": "Role not found"})
@@ -63,9 +60,7 @@ func UpdateRole(c *fiber.Ctx) error {
 
     id := c.Params("id")
 
-    var role model.Role
-
-    err := user_management_model.GetRole(id, &role)
+    role, err := user_management_model.GetRole(db, id)
 
     // Find the role
     if err != nil {
@@ -77,7 +72,7 @@ func UpdateRole(c *fiber.Ctx) error {
       return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
     }
 
-    err = user_management_model.UpdateRole(&role)
+    err = user_management_model.UpdateRole(db, &role)
 
     // Save the role
     if err != nil {
@@ -91,7 +86,7 @@ func UpdateRole(c *fiber.Ctx) error {
 func DeleteRole(c *fiber.Ctx) error {
     id := c.Params("id")
 
-    user_management_model.DeleteRole(id)
+    err := user_management_model.DeleteRole(db, id)
 
     if err != nil {
       return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete role"})

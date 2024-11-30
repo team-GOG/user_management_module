@@ -30,7 +30,9 @@ func (u User) GetType() string {
 }
 
 // CreateUser creates a new user
-func CreateUser(db *gorm.DB, user User) (err error) {
+func CreateUser(db *gorm.DB, user *User) (err error) {
+
+
 
     // Set timestamps
     user.CreatedAt = time.Now().Unix()
@@ -42,9 +44,7 @@ func CreateUser(db *gorm.DB, user User) (err error) {
 }
 
 // GetAllUsers retrieves all users
-func GetAllUsers(db *gorm.DB) (err error) {
-
-    var users []User;
+func GetAllUsers(db *gorm.DB) (users []User, err error) {
 
     err = db.Find(&users).Error
 
@@ -52,7 +52,7 @@ func GetAllUsers(db *gorm.DB) (err error) {
 }
 
 // GetUser retrieves a user by ID
-func GetUser(db *gorm.DB, id int, user User) (err error) {
+func GetUser(db *gorm.DB, id string) (user User, err error) {
 
     err = db.First(&user, id).Error
 
@@ -60,7 +60,7 @@ func GetUser(db *gorm.DB, id int, user User) (err error) {
 }
 
 // UpdateUser updates an existing user by ID
-func UpdateUser(db *gorm.DB, user User) (err error) {
+func UpdateUser(db *gorm.DB, user *User) (err error) {
 
     // Update timestamps
     user.UpdatedAt = time.Now().Unix()
@@ -77,7 +77,7 @@ func UpdateUser(db *gorm.DB, user User) (err error) {
 }
 
 // DeleteUser deletes a user by ID
-func DeleteUser(db *gorm.DB, id int) (err error) {
+func DeleteUser(db *gorm.DB, id string) (err error) {
     err = db.Delete(&User{}, id).Error;
 
     return

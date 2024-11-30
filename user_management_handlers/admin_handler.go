@@ -2,11 +2,11 @@ package user_management_handlers
 
 import (
     "net/http"
-    "time"
 
     "github.com/gofiber/fiber/v2"
-    "user_management_module/user_management_model"
+	  "github.com/Web-developing-team/user_management_module/user_management_model"
 )
+
 
 // CreateAdmin creates a new admin
 func CreateAdmin(c *fiber.Ctx) error {
@@ -18,7 +18,7 @@ func CreateAdmin(c *fiber.Ctx) error {
       return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
     }
 
-    err = user_management_model.CreateAdmin(&admin)
+    err := user_management_model.CreateAdmin(db, &admin)
 
     // Insert admin into database
     if err != nil {
@@ -33,7 +33,7 @@ func GetAllAdmins(c *fiber.Ctx) error {
 
     var admins []user_management_model.Admin
 
-    err := user_management_model.GetAllAdmins(&admins)
+    err := user_management_model.GetAllAdmins(db, &admins)
 
     if err != nil {
       return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to fetch admins"})
@@ -49,7 +49,7 @@ func GetAdmin(c *fiber.Ctx) error {
 
     var admin user_management_model.Admin
 
-    err := user_management_model.GetAdmin(id, &admin)
+    err := user_management_model.GetAdmin(db, id, &admin)
 
     if err != nil {
       return c.Status(http.StatusNotFound).JSON(fiber.Map{"error": "Admin not found"})
@@ -63,9 +63,9 @@ func UpdateAdmin(c *fiber.Ctx) error {
 
     id := c.Params("id")
 
-    var admin model.Admin
+    var admin user_management_model.Admin
 
-    err := user_management_model.GetAdmin(id, &admin)
+    err := user_management_model.GetAdmin(db, id, &admin)
 
     // Find the admin 
     if err != nil {
@@ -77,7 +77,7 @@ func UpdateAdmin(c *fiber.Ctx) error {
       return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
     }
 
-    err = user_management_model.UpdateAdmin(&admin)
+    err = user_management_model.UpdateAdmin(db, &admin)
 
     // Save the admin
     if err != nil {
@@ -91,7 +91,7 @@ func UpdateAdmin(c *fiber.Ctx) error {
 func DeleteAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 
-    user_management_model.DeleteAdmin(id)
+    err := user_management_model.DeleteAdmin(db, id)
 
     if err != nil {
       return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete admin"})
