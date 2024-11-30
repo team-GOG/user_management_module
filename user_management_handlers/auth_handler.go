@@ -6,7 +6,6 @@ import (
     "github.com/gofiber/fiber/v2"
     "github.com/Web-developing-team/user_management_module/user_management_model"
     "github.com/Web-developing-team/user_management_module/utils"
-    "gorm.io/gorm"
 )
 
 func AdminLogin(c *fiber.Ctx) error {
@@ -20,7 +19,6 @@ func AdminLogin(c *fiber.Ctx) error {
     }
 
     var admin user_management_model.Admin
-    db := c.Locals("db").(*gorm.DB)
     if err := db.Where("email = ?", login.Email).First(&admin).Error; err != nil {
       return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
     }
@@ -51,7 +49,6 @@ func UserLogin(c *fiber.Ctx) error {
     }
 
     var user user_management_model.User
-    db := c.Locals("db").(*gorm.DB)
     if err := db.Where("email = ?", login.Email).First(&user).Error; err != nil {
       return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"error": "Invalid credentials"})
     }
