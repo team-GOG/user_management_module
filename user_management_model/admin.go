@@ -1,22 +1,24 @@
 package user_management_model
 
 import (
-    "time"
+    "errors"
     "fmt"
+    "time"
 
     "github.com/bxcodec/faker/v4"
     "gorm.io/gorm"
 )
 
+// Admin represents the admins table in the database.
 type Admin struct {
-    ID   uint                 `gorm:"primaryKey"`
-    Name string               `gorm:"not null"`
-    Email string              `gorm:"unique;not null"`
-    Password  string          `gorm:"type:varchar(255)" json:"-"`
-    CreatedAt int64           `json:"created_at"`
-    UpdatedAt int64           `json:"updated_at"`
-    DeletedAt gorm.DeletedAt  `gorm:"index" json:"-"`
-    Roleable []Roleable       `gorm:"polymorphic:Roleable;"`
+    ID        uint           `gorm:"primaryKey" json:"id"`
+    Name      string         `gorm:"not null" json:"name"`
+    Email     string         `gorm:"unique;not null" json:"email"`
+    Password  string         `gorm:"type:varchar(255)" json:"-"`
+    CreatedAt int64          `json:"created_at"`
+    UpdatedAt int64          `json:"updated_at"`
+    DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+    Roleable  []Roleable     `gorm:"polymorphic:Roleable;"`
 }
 
 // Implement RoleableEntity for Admin
@@ -28,77 +30,70 @@ func (a Admin) GetType() string {
     return "admins"
 }
 
-
-
-// CreateAdmin creates a new admin
-func CreateAdmin(db *gorm.DB, admin *Admin) (err error) {
-
-    // Set timestamps
-    admin.CreatedAt = time.Now().Unix()
-    admin.UpdatedAt = time.Now().Unix()
-
-    err = db.Create(&admin).Error
-
-    return
+// SetTimestamps updates CreatedAt and UpdatedAt fields for the admin.
+func (a *Admin) SetTimestamps() {
+    now := time.Now().Unix()
+    if a.CreatedAt == 0 {
+        a.CreatedAt = now
+    }
+    a.UpdatedAt = now
 }
 
-// GetAllAdmins retrieves all admins
-func GetAllAdmins(db *gorm.DB, admins *[]Admin) (err error) {
-    err = db.Find(&admins).Error
-
-    return 
+// CreateAdmin inserts a new admin into the database.
+func CreateAdmin(db *gorm.DB, admin *Admin) error {
+    admin.SetTimestamps()
+    return db.Create(&admin).Error
 }
 
-// GetAdmin retrieves a admin by ID
-func GetAdmin(db *gorm.DB, id string, admin *Admin) (err error) {
-
-    err = db.First(&admin, id).Error
-
-    return
+// GetAllAdmins retrieves all admins from the database.
+func GetAllAdmins(db *gorm.DB) ([]Admin, error) {
+    var admins []Admin
+    err := db.Find(&admins).Error
+    return admins, err
 }
 
-// UpdateAdmin updates an existing admin by ID
-func UpdateAdmin(db *gorm.DB, admin *Admin) (err error) {
+// GetAdmin retrieves an admin by ID from the database.
+func GetAdmin(db *gorm.DB, id string) (Admin, error) {
+    var admin Admin
+    err := db.First(&admin, id).Error
+    if errors.Is(err, gorm.ErrRecordNotFound) {
+        return Admin{}, fmt.Errorf("admin with ID %s not found", id)
+    }
+    return admin, err
+}
 
-    // Update timestamps
-    admin.UpdatedAt = time.Now().Unix()
-
+// UpdateAdmin updates an existing admin's information in the database.
+func UpdateAdmin(db *gorm.DB, admin *Admin) error {
+    admin.SetTimestamps()
     result := db.Model(&Admin{}).Where("id = ?", admin.ID).Updates(admin)
 
-    err = result.Error
-
-    if result.RowsAffected == 0 && err == nil {
-      err = fmt.Errorf("no admin found with ID: %d", admin.ID)
+    if result.RowsAffected == 0 && result.Error == nil {
+        return fmt.Errorf("no admin found with ID: %d", admin.ID)
     }
-
-    return 
+    return result.Error
 }
 
-// DeleteAdmin deletes a admin by ID
-func DeleteAdmin(db *gorm.DB, id string) (err error) {
-    err = db.Delete(&Admin{}, id).Error;
-
-    return
+// DeleteAdmin deletes an admin by ID from the database.
+func DeleteAdmin(db *gorm.DB, id string) error {
+    result := db.Delete(&Admin{}, id)
+    if result.RowsAffected == 0 && result.Error == nil {
+        return fmt.Errorf("no admin found with ID: %s", id)
+    }
+    return result.Error
 }
 
+// GenerateFakeAdmins generates a specified number of fake admins for testing.
 func GenerateFakeAdmins(db *gorm.DB, count int) error {
-
     for i := 0; i < count; i++ {
-
         admin := Admin{
-            Name:      faker.Name(),
-            Email:     faker.Email(),
-            Password:  faker.Password(),
-            CreatedAt: time.Now().Unix(),
-            UpdatedAt: time.Now().Unix(),
+            Name:     faker.Name(),
+            Email:    faker.Email(),
+            Password: faker.Password(),
         }
-
-        // Create admin
+        admin.SetTimestamps()
         if err := db.Create(&admin).Error; err != nil {
             return err
         }
-
     }
-
     return nil
 }
