@@ -47,7 +47,7 @@ func CreateSuperAdmin(db *gorm.DB, superAdmin Admin) error {
             return err
         }
 
-		permissions, err := GetAllPermissions(db)
+		permissions, err := GetAllPermissions(tx)
 
 		if err != nil {
 			return err
@@ -62,6 +62,32 @@ func CreateSuperAdmin(db *gorm.DB, superAdmin Admin) error {
         if err := tx.Model(&superAdmin).Association("Roleable").Append(superAdminRole); err != nil {
             return err
         }
+
+        return nil
+    })
+}
+
+
+// CreateAllNeededPermissions creates all needed permissions
+func CreateAllNeededPermissions(db *gorm.DB) error {
+    return db.Transaction(func(tx *gorm.DB) error {
+
+        permissions := []Permission{
+            {Name: "CreateUser"},
+            {Name: "UpdateUser"},
+            {Name: "DeleteUser"},
+            {Name: "CreateAdmin"},
+            {Name: "UpdateAdmin"},
+            {Name: "DeleteAdmin"},
+            {Name: "CreateRole"},
+            {Name: "UpdateRole"},
+            {Name: "DeleteRole"},
+            {Name: "CreatePermission"},
+            {Name: "UpdatePermission"},
+            {Name: "DeletePermission"},
+        }
+
+		CreatePermissions(tx, permissions)
 
         return nil
     })
