@@ -15,3 +15,28 @@ func CreatePermissions(db *gorm.DB, permissions []Permission) error {
     }
     return nil
 }
+
+
+// GetAllPermissions retrieves all permissions from the database
+func GetAllPermissions(db *gorm.DB) ([]Permission, error) {
+    var permissions []Permission
+
+    if err := db.Find(&permissions).Error; err != nil {
+        return nil, err
+    }
+
+    return permissions, nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

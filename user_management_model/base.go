@@ -13,7 +13,7 @@ func GetDB() *gorm.DB {
 }
 
 // CreateSuperAdmin creates a superadmin user, assigns a role, and grants all permissions
-func CreateSuperAdmin(db *gorm.DB, superAdmin Admin, permissions []Permission) error {
+func CreateSuperAdmin(db *gorm.DB, superAdmin Admin) error {
     return db.Transaction(func(tx *gorm.DB) error {
         // Check if superadmin already exists
         var existingAdmin Admin
@@ -24,20 +24,34 @@ func CreateSuperAdmin(db *gorm.DB, superAdmin Admin, permissions []Permission) e
         // Create superadmin user
         superAdmin.CreatedAt = time.Now().Unix()
         superAdmin.UpdatedAt = time.Now().Unix()
+
         if err := tx.Create(&superAdmin).Error; err != nil {
             return err
         }
 
-        // Create a role for superadmin
-        superAdminRole := Role{
-            Name:      "SuperAdmin",
-            CreatedAt: time.Now().Unix(),
-            UpdatedAt: time.Now().Unix(),
-        }
+		
+        // Check if superadmin role already exists
+		var superAdminRole Role
+
+        if err := tx.Where("name = ?", "SuperAdmin").First(&superAdminRole).Error; err != nil {
+			// Create a role for superadmin
+			superAdminRole = Role{
+				Name:      "SuperAdmin",
+				CreatedAt: time.Now().Unix(),
+				UpdatedAt: time.Now().Unix(),
+			}
+		}
+
 
         if err := tx.Create(&superAdminRole).Error; err != nil {
             return err
         }
+
+		permissions, err := GetAllPermissions(db)
+
+		if err != nil {
+			return err
+		}
 
         // Associate all permissions to the role
         if err := tx.Model(&superAdminRole).Association("Permissions").Append(permissions); err != nil {
