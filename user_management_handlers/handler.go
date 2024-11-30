@@ -8,6 +8,7 @@ import (
 var db = user_management_model.GetDB()
 
 
+
 // respondWithError is a helper to send error responses consistently.
 func respondWithError(c *fiber.Ctx, status int, message string) error {
     return c.Status(status).JSON(fiber.Map{"error": message})
