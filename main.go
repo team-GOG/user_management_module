@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-
 	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/Web-developing-team/user_management_module/user_management_model"
 	"github.com/Web-developing-team/user_management_module/user_management_routes"
