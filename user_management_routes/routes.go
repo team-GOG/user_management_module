@@ -3,11 +3,19 @@ package user_management_routes
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/Web-developing-team/user_management_module/user_management_handlers"
+	"github.com/Web-developing-team/user_management_module/middlewares"
 )
 
 func SetupRoutes(app *fiber.App) {
 
 	api := app.Group("/api")
+
+	// Public Routes
+	api.Post("/admin/login", user_management_handlers.AdminLogin)
+	api.Post("/user/login", user_management_handlers.UserLogin)
+
+	// Protected Routes
+	api.Use(middlewares.AuthenticateJWT)
 
 	api.Post("/admin", user_management_handlers.CreateAdmin)
 	api.Get("/admin", user_management_handlers.GetAllAdmins)

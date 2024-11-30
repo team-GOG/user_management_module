@@ -5,6 +5,7 @@ go 1.23.3
 require (
 	github.com/bxcodec/faker/v4 v4.0.0-beta.3
 	github.com/gofiber/fiber/v2 v2.52.5
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	gorm.io/gorm v1.25.12
 )
 
