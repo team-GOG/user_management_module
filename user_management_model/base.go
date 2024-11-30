@@ -12,14 +12,6 @@ func GetDB() *gorm.DB {
 	return DB
 }
 
-package user_management_model
-
-import (
-    "errors"
-    "gorm.io/gorm"
-    "time"
-)
-
 // CreateSuperAdmin creates a superadmin user, assigns a role, and grants all permissions
 func CreateSuperAdmin(db *gorm.DB, superAdmin Admin, permissions []Permission) error {
     return db.Transaction(func(tx *gorm.DB) error {
