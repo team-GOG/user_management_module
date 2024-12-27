@@ -4,6 +4,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/Web-developing-team/user_management_module/user_management_handlers"
 	"github.com/Web-developing-team/user_management_module/middlewares"
+
+	"github.com/gofiber/swagger"
 )
 
 func SetupRoutes(app *fiber.App) {
@@ -34,4 +36,7 @@ func SetupRoutes(app *fiber.App) {
 	api.Get("/user/:id", user_management_handlers.GetUser)
 	api.Put("/user/:id", user_management_handlers.UpdateUser)
 	api.Delete("/user/:id", user_management_handlers.DeleteUser)
+
+
+	app.Get("/swagger/*", swagger.HandlerDefault) // default
 }

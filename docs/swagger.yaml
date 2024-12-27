@@ -1,0 +1,247 @@
+basePath: /
+definitions:
+  user_management_handlers.LoginRequest:
+    properties:
+      email:
+        example: admin@example.com
+        type: string
+      password:
+        example: securepassword
+        type: string
+    type: object
+  user_management_model.Admin:
+    properties:
+      created_at:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      roleable:
+        items:
+          $ref: '#/definitions/user_management_model.Roleable'
+        type: array
+      updated_at:
+        type: integer
+    type: object
+  user_management_model.Permission:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  user_management_model.Role:
+    properties:
+      created_at:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      permissions:
+        items:
+          $ref: '#/definitions/user_management_model.Permission'
+        type: array
+      updated_at:
+        type: integer
+    type: object
+  user_management_model.Roleable:
+    properties:
+      id:
+        type: integer
+      role:
+        $ref: '#/definitions/user_management_model.Role'
+      roleID:
+        type: integer
+      roleableID:
+        description: ID of the associated entity
+        type: integer
+      roleableType:
+        description: Type of the associated entity (e.g., "users", "admins")
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: This is a sample swagger for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /api/admin:
+    get:
+      consumes:
+      - application/json
+      description: Get all admins
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all admins
+      tags:
+      - admins
+    post:
+      consumes:
+      - application/json
+      description: Create a new admin
+      parameters:
+      - description: Admin to be created
+        in: body
+        name: admin
+        required: true
+        schema:
+          $ref: '#/definitions/user_management_model.Admin'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new admin
+      tags:
+      - admins
+  /api/admin/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete an admin
+      parameters:
+      - description: Admin ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete an admin
+      tags:
+      - admins
+    put:
+      consumes:
+      - application/json
+      description: update an admin
+      parameters:
+      - description: Admin ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Admin to be updated
+        in: body
+        name: admin
+        required: true
+        schema:
+          $ref: '#/definitions/user_management_model.Admin'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update an existing admin
+      tags:
+      - admins
+  /api/admin/login:
+    post:
+      consumes:
+      - application/json
+      description: Login as an admin and receive a JWT token
+      parameters:
+      - description: Login credentials
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/user_management_handlers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to generate token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Admin Login
+      tags:
+      - Admin Authentication
+  /api/admins{id}:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: Admin ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Show an  admin
+      tags:
+      - admins
+  /api/user/login:
+    post:
+      consumes:
+      - application/json
+      description: Login as a user and receive a JWT token
+      parameters:
+      - description: Login credentials
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/user_management_handlers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to generate token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User Login
+      tags:
+      - User Authentication
+swagger: "2.0"

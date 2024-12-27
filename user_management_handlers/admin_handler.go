@@ -7,7 +7,14 @@ import (
     "github.com/Web-developing-team/user_management_module/user_management_model"
 )
 
-// CreateAdmin creates a new admin
+// CreateAdmin godoc
+// @Summary      Create a new admin
+// @Description  Create a new admin
+// @Tags         admins
+// @Accept       json
+// @Produce      json
+// @Param        admin body user_management_model.Admin true "Admin to be created"
+// @Router       /api/admin [post]
 func CreateAdmin(c *fiber.Ctx) error {
     var admin user_management_model.Admin
 
@@ -24,7 +31,13 @@ func CreateAdmin(c *fiber.Ctx) error {
     return c.Status(http.StatusCreated).JSON(admin)
 }
 
-// GetAllAdmins retrieves all admins
+// GetAllAdmins godoc
+// @Summary      Get all admins
+// @Description  Get all admins
+// @Tags         admins
+// @Accept       json
+// @Produce      json
+// @Router       /api/admin [get]
 func GetAllAdmins(c *fiber.Ctx) error {
     admins, err := user_management_model.GetAllAdmins(db)
     if err != nil {
@@ -34,7 +47,14 @@ func GetAllAdmins(c *fiber.Ctx) error {
     return c.JSON(admins)
 }
 
-// GetAdmin retrieves an admin by ID
+// ShowAdmin godoc
+// @Summary      Show an  admin
+// @Description  get string by ID
+// @Tags         admins
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "Admin ID"
+// @Router       /api/admins{id} [get]
 func GetAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 
@@ -46,7 +66,15 @@ func GetAdmin(c *fiber.Ctx) error {
     return c.JSON(admin)
 }
 
-// UpdateAdmin updates an existing admin by ID
+// UpdateAdmin godoc
+// @Summary      Update an existing admin
+// @Description  update an admin
+// @Tags         admins
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "Admin ID"
+// @Param        admin body user_management_model.Admin true "Admin to be updated"
+// @Router       /api/admin/{id} [put]
 func UpdateAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 
@@ -68,7 +96,14 @@ func UpdateAdmin(c *fiber.Ctx) error {
     return c.JSON(admin)
 }
 
-// DeleteAdmin deletes an admin by ID
+// DeleteAdmin godoc
+// @Summary      Delete an admin
+// @Description  delete an admin
+// @Tags         admins
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "Admin ID"
+// @Router       /api/admin/{id} [delete]
 func DeleteAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 
@@ -78,3 +113,4 @@ func DeleteAdmin(c *fiber.Ctx) error {
 
     return c.SendStatus(http.StatusNoContent)
 }
+
