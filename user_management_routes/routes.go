@@ -6,7 +6,10 @@ import (
 	"github.com/Web-developing-team/user_management_module/middlewares"
 
 	"github.com/gofiber/swagger"
+
+  _ "github.com/Web-developing-team/user_management_module/docs"
 )
+
 
 func SetupRoutes(app *fiber.App) {
 
