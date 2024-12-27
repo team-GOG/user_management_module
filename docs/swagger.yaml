@@ -84,6 +84,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Get all admins
       tags:
       - admins
@@ -101,6 +103,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Create a new admin
       tags:
       - admins
@@ -118,6 +122,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Delete an admin
       tags:
       - admins
@@ -140,6 +146,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Update an existing admin
       tags:
       - admins
@@ -199,6 +207,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - ApiKeyAuth: []
       summary: Show an  admin
       tags:
       - admins

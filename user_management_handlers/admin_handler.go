@@ -15,6 +15,7 @@ import (
 // @Produce      json
 // @Param        admin body user_management_model.Admin true "Admin to be created"
 // @Router       /api/admin [post]
+//	@Security		ApiKeyAuth
 func CreateAdmin(c *fiber.Ctx) error {
     var admin user_management_model.Admin
 
@@ -38,6 +39,7 @@ func CreateAdmin(c *fiber.Ctx) error {
 // @Accept       json
 // @Produce      json
 // @Router       /api/admin [get]
+//	@Security		ApiKeyAuth
 func GetAllAdmins(c *fiber.Ctx) error {
     admins, err := user_management_model.GetAllAdmins(db)
     if err != nil {
@@ -55,6 +57,7 @@ func GetAllAdmins(c *fiber.Ctx) error {
 // @Produce      json
 // @Param        id   path      int  true  "Admin ID"
 // @Router       /api/admins{id} [get]
+//	@Security		ApiKeyAuth
 func GetAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 
@@ -75,6 +78,7 @@ func GetAdmin(c *fiber.Ctx) error {
 // @Param        id   path      int  true  "Admin ID"
 // @Param        admin body user_management_model.Admin true "Admin to be updated"
 // @Router       /api/admin/{id} [put]
+//	@Security		ApiKeyAuth
 func UpdateAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 
@@ -104,6 +108,7 @@ func UpdateAdmin(c *fiber.Ctx) error {
 // @Produce      json
 // @Param        id   path      int  true  "Admin ID"
 // @Router       /api/admin/{id} [delete]
+//	@Security		ApiKeyAuth
 func DeleteAdmin(c *fiber.Ctx) error {
     id := c.Params("id")
 

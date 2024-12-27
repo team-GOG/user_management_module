@@ -25,6 +25,11 @@ const docTemplate = `{
     "paths": {
         "/api/admin": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get all admins",
                 "consumes": [
                     "application/json"
@@ -39,6 +44,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Create a new admin",
                 "consumes": [
                     "application/json"
@@ -130,6 +140,11 @@ const docTemplate = `{
         },
         "/api/admin/{id}": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "update an admin",
                 "consumes": [
                     "application/json"
@@ -162,6 +177,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "delete an admin",
                 "consumes": [
                     "application/json"
@@ -187,6 +207,11 @@ const docTemplate = `{
         },
         "/api/admins{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "get string by ID",
                 "consumes": [
                     "application/json"
