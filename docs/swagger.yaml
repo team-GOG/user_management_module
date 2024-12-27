@@ -182,6 +182,8 @@ paths:
             additionalProperties:
               type: string
             type: object
+      security:
+      - ApiKeyAuth: []
       summary: Admin Login
       tags:
       - Admin Authentication

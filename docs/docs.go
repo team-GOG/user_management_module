@@ -66,6 +66,11 @@ const docTemplate = `{
         },
         "/api/admin/login": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Login as an admin and receive a JWT token",
                 "consumes": [
                     "application/json"

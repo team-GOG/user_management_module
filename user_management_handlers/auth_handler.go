@@ -28,6 +28,7 @@ type LoginRequest struct {
 // @Failure 401 {object} map[string]string "Invalid credentials"
 // @Failure 500 {object} map[string]string "Failed to generate token"
 // @Router /api/admin/login [post]
+// @Security ApiKeyAuth
 func AdminLogin(c *fiber.Ctx) error {
 
   var login LoginRequest
