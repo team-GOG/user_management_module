@@ -250,6 +250,4 @@ securityDefinitions:
     in: header
     name: Authorization
     type: apiKey
-  BasicAuth:
-    type: basic
 swagger: "2.0"

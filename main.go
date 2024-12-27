@@ -22,8 +22,7 @@ import (
 //	@host			localhost:3000
 //	@BasePath		/
 //
-//	@securityDefinitions.basic	BasicAuth
-
+//
 //	@securityDefinitions.apikey	ApiKeyAuth
 //	@in							header
 //	@name						Authorization
