@@ -4,7 +4,7 @@ import (
     "time"
 
     "github.com/golang-jwt/jwt/v5"
-    "github.com/Web-developing-team/user_management_module/config"
+    "github.com/team-GOG/user_management_module/config"
 )
 
 // GenerateJWT generates a JWT token for the given user ID and role

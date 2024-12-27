@@ -5,7 +5,7 @@ import (
 
     "github.com/gofiber/fiber/v2"
     "github.com/golang-jwt/jwt/v5"
-    "github.com/Web-developing-team/user_management_module/config"
+    "github.com/team-GOG/user_management_module/config"
 )
 
 // AuthenticateJWT middleware validates the JWT token and sets user info in context

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/Web-developing-team/user_management_module/user_management_model"
-	"github.com/Web-developing-team/user_management_module/utils"
+	"github.com/team-GOG/user_management_module/user_management_model"
+	"github.com/team-GOG/user_management_module/utils"
 )
 
 

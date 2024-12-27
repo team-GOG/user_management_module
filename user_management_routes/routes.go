@@ -2,12 +2,12 @@ package user_management_routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/Web-developing-team/user_management_module/user_management_handlers"
-	"github.com/Web-developing-team/user_management_module/middlewares"
+	"github.com/team-GOG/user_management_module/user_management_handlers"
+	"github.com/team-GOG/user_management_module/middlewares"
 
 	"github.com/gofiber/swagger"
 
-  _ "github.com/Web-developing-team/user_management_module/docs"
+  _ "github.com/team-GOG/user_management_module/docs"
 )
 
 
