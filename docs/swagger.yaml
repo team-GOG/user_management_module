@@ -182,8 +182,6 @@ paths:
             additionalProperties:
               type: string
             type: object
-      security:
-      - ApiKeyAuth: []
       summary: Admin Login
       tags:
       - Admin Authentication
@@ -246,4 +244,12 @@ paths:
       summary: User Login
       tags:
       - User Authentication
+securityDefinitions:
+  ApiKeyAuth:
+    description: Description for what is this security definition being used
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
 swagger: "2.0"

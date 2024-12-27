@@ -21,6 +21,13 @@ import (
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 //	@host			localhost:3000
 //	@BasePath		/
+//
+//	@securityDefinitions.basic	BasicAuth
+
+//	@securityDefinitions.apikey	ApiKeyAuth
+//	@in							header
+//	@name						Authorization
+//	@description				Description for what is this security definition being used
 func main() {
 
 	fmt.Println(user_management_model.User{})
